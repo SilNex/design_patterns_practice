@@ -1,112 +1,112 @@
 <?php
 
-namespace AbstractFactory\Conceptual;
+// namespace AbstractFactory\Conceptual;
 
-interface AbstractFactory
+interface 추상팩토리
 {
-    public function createProductA(): AbstractProductA;
+    public function 물건A생성(): 추상화A;
 
-    public function createProductB(): AbstractProductB;
+    public function 물건B생성(): 추상화B;
 }
 
-class ConcreteFactory1 implements AbstractFactory
+class 정형화팩토리1 implements 추상팩토리
 {
-    public function createProductA(): AbstractProductA
+    public function 물건A생성(): 추상화A
     {
-        return new ConcreteProductA1;
+        return new 물건정형화A1;
     }
 
-    public function createProductB(): AbstractProductB
+    public function 물건B생성(): 추상화B
     {
-        return new ConcreteProductB1;
-    }
-}
-
-class ConcreteFactory2 implements AbstractFactory
-{
-    public function createProductA(): AbstractProductA
-    {
-        return new ConcreteProductA2;
-    }
-
-    public function createProductB(): AbstractProductB
-    {
-        return new ConcreteProductB2;
+        return new 물건정형화B1;
     }
 }
 
-interface AbstractProductA
+class 정형화팩토리2 implements 추상팩토리
 {
-    public function usefulFunctionA(): string;
-}
-
-class ConcreteProductA1 implements AbstractProductA
-{
-    public function usefulFunctionA(): string
+    public function 물건A생성(): 추상화A
     {
-        return "The result of the product A1.";
+        return new 물건정형화A2;
+    }
+
+    public function 물건B생성(): 추상화B
+    {
+        return new 물건정형화B2;
     }
 }
 
-class ConcreteProductA2 implements AbstractProductA
+interface 추상화A
 {
-    public function usefulFunctionA(): string
+    public function A함수사용(): string;
+}
+
+class 물건정형화A1 implements 추상화A
+{
+    public function A함수사용(): string
     {
-        return "The result of the product A2.";
+        return "물건정형화A1의 A함수 결과.";
     }
 }
 
-
-interface AbstractProductB
+class 물건정형화A2 implements 추상화A
 {
-    public function usefulFunctionB(): string;
-
-    public function anotherUsefulFunctionB(AbstractProductA $collaborator): string;
-}
-
-class ConcreteProductB1 implements AbstractProductB
-{
-    public function usefulFunctionB(): string
+    public function A함수사용(): string
     {
-        return "The result of the product B1.";
-    }
-
-    public function anotherUsefulFunctionB(AbstractProductA $collaborator): string
-    {
-        $result = $collaborator->usefulFunctionA();
-
-        return "The result of the B1 collaborating with the ({$result})";
-    }
-}
-
-class ConcreteProductB2 implements AbstractProductB
-{
-    public function usefulFunctionB(): string
-    {
-        return "The result of the product B2.";
-    }
-
-    public function anotherUsefulFunctionB(AbstractProductA $collaborator): string
-    {
-        $result = $collaborator->usefulFunctionA();
-
-        return "The result of the B2 collaborating with the ({$result})";
+        return "물건정형화A2의 A함수 결과.";
     }
 }
 
 
-function clientCode(AbstractFactory $factory)
+interface 추상화B
 {
-    $productA = $factory->createProductA();
-    $productB = $factory->createProductB();
+    public function B함수사용(): string;
 
-    echo $productB->usefulFunctionB() . "\n";
-    echo $productB->anotherUsefulFunctionB($productA) . "\n";
+    public function 다른B함수사용(추상화A $결합자): string;
 }
-echo "Client: Testing client code with the first factory type:\n";
-clientCode(new ConcreteFactory1);
+
+class 물건정형화B1 implements 추상화B
+{
+    public function B함수사용(): string
+    {
+        return "물건정형화B1의 B함수 결과.";
+    }
+
+    public function 다른B함수사용(추상화A $결합자): string
+    {
+        $result = $결합자->A함수사용();
+
+        return "물건정형화B1의 B함수 결과와 ({$result})";
+    }
+}
+
+class 물건정형화B2 implements 추상화B
+{
+    public function B함수사용(): string
+    {
+        return "물건정형화B2의 B함수 결과.";
+    }
+
+    public function 다른B함수사용(추상화A $결합자): string
+    {
+        $result = $결합자->A함수사용();
+
+        return "물건정형화B2의 B함수 결과와 ({$result})";
+    }
+}
+
+
+function clientCode(추상팩토리 $factory)
+{
+    $productA = $factory->물건A생성();
+    $productB = $factory->물건B생성();
+
+    echo $productB->B함수사용() . "\n";
+    echo $productB->다른B함수사용($productA) . "\n";
+}
+echo "clientCode: 첫 팩토리 타입으로 클라이언트 코드 테스트:\n";
+clientCode(new 정형화팩토리1);
 
 echo "\n";
 
-echo "Client: Testing the same client code with the second factory type:\n";
-clientCode(new ConcreteFactory2);
+echo "clientCode: 두번째 팩토리 타입으로 같은 클라이언트 코드 테스트:\n";
+clientCode(new 정형화팩토리2);
