@@ -30,7 +30,21 @@ class FacebookPoster extends SocialNetworkPoster
     }
 }
 
-// 
+class LinkedInPost extends SocialNetworkPoster
+{
+    private $login, $password;
+
+    public function __construct(string $login, string $password)
+    {
+        $this->login = $login;
+        $this->password = $password;
+    }
+
+    public function getSocialNetwork(): \SocialNetworkConnector
+    {
+        return new LinkedInConnector($this->login, $this->password);
+    }
+}
 
 interface SocialNetworkConnector
 {
@@ -67,6 +81,32 @@ class FacebookConnector implements SocialNetworkConnector
     }
 }
 
+class LinkedInConnector implements SocialNetworkConnector
+{
+    private $login, $password;
+    
+    public function __construct(string $login, string $password)
+    {
+        $this->login = $login;
+        $this->password = $password;
+    }
+
+    public function logIn(): void
+    {
+        echo "LinkedIn Login request... with {$this->login}\n";
+    }
+
+    public function logOut(): void
+    {
+        echo "LinkedIn Logout request...\n";
+    }
+
+    public function createPost($content): void
+    {
+        echo "create $content in linkedin\n";
+    }
+}
+
 function clientCode(SocialNetworkPoster $creater)
 {
     $creater->post("Hello World!");
@@ -74,5 +114,6 @@ function clientCode(SocialNetworkPoster $creater)
 }
 
 echo "Testing ConcreteCraeteor1:\n";
-clientCode(new FacebookPoster("john", "qwer1234"));
+// clientCode(new FacebookPoster("john", "qwer1234"));
+clientCode(new LinkedInPost("john", "qwer1234"));
 echo "\n\n";
