@@ -2,7 +2,85 @@
 
 namespace HeadFirst;
 
-class CheesePizza
+abstract class Pizza
+{
+    protected $name;
+    protected $dough;
+    protected $sauce;
+    protected $toppings = [];
+
+    public function prepare()
+    {
+        echo "{$this->name} 피자 준비... \n";
+        echo "도우 준비\n";
+        echo "소스 추가\n";
+        echo "토핑 추가 : ";
+        foreach ($this->toppings as $topping) {
+            echo "{$topping} ";
+        }
+        echo "\n";
+    }
+
+    public function bake()
+    {
+        echo "{$this->name} 파자 굽기 \n";
+    }
+
+    public function cut()
+    {
+        echo "{$this->name} 파자 자르기 \n";
+    }
+
+    public function box()
+    {
+        echo "{$this->name} 피자 포장";
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+}
+
+
+class NYStyleCheesePizza extends Pizza
+{
+    public function __construct()
+    {
+        $this->name = 'NY Style Cheese';
+        $this->dough = 'Thin';
+        $this->sauce = 'Marinara Sauce';
+
+        $this->toppings[] = 'toppings';
+    }
+}
+
+class NYStyleGreekPizza extends Pizza
+{
+    public function __construct()
+    {
+        $this->name = 'NY Style Greek';
+        $this->dough = 'Thin';
+        $this->sauce = 'Marinara Sauce';
+
+        $this->toppings[] = 'toppings';
+    }
+}
+
+class NYStylePepperoniPizza extends Pizza
+{
+    public function __construct()
+    {
+        $this->name = 'NY Style Pepperoni';
+        $this->dough = 'Thin';
+        $this->sauce = 'Marinara Sauce';
+
+        $this->toppings[] = 'toppings';
+    }
+}
+
+class ChicagoStyleCheesePizza
 {
     public function prepare()
     {
@@ -25,7 +103,7 @@ class CheesePizza
     }
 }
 
-class GreekPizza
+class ChicagoStyleGreekPizza
 {
     public function prepare()
     {
@@ -48,7 +126,7 @@ class GreekPizza
     }
 }
 
-class PepperoniPizza
+class ChicagoStylePepperoniPizza
 {
     public function prepare()
     {
@@ -70,3 +148,4 @@ class PepperoniPizza
         echo 'PepperoniPizza 박스에 담기'.PHP_EOL;
     }
 }
+

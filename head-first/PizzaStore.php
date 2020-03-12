@@ -2,16 +2,11 @@
 
 namespace HeadFirst;
 
-class PizzaStore
+abstract class PizzaStore
 {
-    public function __construct()
-    {
-        $this->pizzaFactory = new SimplePizzaFactory();
-    }
-
     public function orderPizza(string $type)
     {
-        $pizza = $this->pizzaFactory->createPizza($type);
+        $pizza = $this->createPizza($type);
 
         $pizza->prepare();
         $pizza->bake();
@@ -20,18 +15,36 @@ class PizzaStore
 
         return $pizza;
     }
+
+    abstract public function createPizza(string $type);
 }
 
-class SimplePizzaFactory
+class NYPizzaStore extends PizzaStore
 {
-    public function createPizza(string $type)
+    public function createPizza($type)
     {
         if ($type === 'cheese') {
-            $pizza = new CheesePizza();
+            $pizza = new NYStyleCheesePizza();
         } elseif ($type === 'greek') {
-            $pizza = new GreekPizza();
+            $pizza = new NYStyleGreekPizza();
         } elseif ($type === 'pepperoni') {
-            $pizza = new PepperoniPizza();
+            $pizza = new NYStylePepperoniPizza();
+        }
+
+        return $pizza;
+    }
+}
+
+class ChicagoPizzaStore extends PizzaStore
+{
+    public function createPizza($type)
+    {
+        if ($type === 'cheese') {
+            $pizza = new ChicagoStyleCheesePizza();
+        } elseif ($type === 'greek') {
+            $pizza = new ChicagoStyleGreekPizza();
+        } elseif ($type === 'pepperoni') {
+            $pizza = new ChicagoStylePepperoniPizza();
         }
 
         return $pizza;

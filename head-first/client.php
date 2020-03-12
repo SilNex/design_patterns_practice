@@ -1,9 +1,9 @@
 <?php
 
-use HeadFirst\PizzaStore;
+use HeadFirst\NYPizzaStore;
 
 require('PizzaStore.php');
 require('Pizza.php');
 
-$client = new PizzaStore();
+$client = new NYPizzaStore();
 $client->orderPizza('cheese');
