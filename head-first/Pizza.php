@@ -33,7 +33,7 @@ abstract class Pizza
 
     public function box()
     {
-        echo "{$this->name} 피자 포장";
+        echo "{$this->name} 피자 포장\n";
     }
 
     public function getName()
