@@ -7,19 +7,12 @@ abstract class Pizza
     protected $name;
     protected $dough;
     protected $sauce;
-    protected $toppings = [];
+    protected $veegies;
+    protected $cheese;
+    protected $pepperoni;
+    protected $clams;
 
-    public function prepare()
-    {
-        echo "{$this->name} 피자 준비... \n";
-        echo "도우 준비\n";
-        echo "소스 추가\n";
-        echo "토핑 추가 : ";
-        foreach ($this->toppings as $topping) {
-            echo "{$topping} ";
-        }
-        echo "\n";
-    }
+    abstract public function prepare();
 
     public function bake()
     {
@@ -41,111 +34,64 @@ abstract class Pizza
         return $this->name;
     }
 
-}
-
-
-class NYStyleCheesePizza extends Pizza
-{
-    public function __construct()
+    public function setName(string $name)
     {
-        $this->name = 'NY Style Cheese';
-        $this->dough = 'Thin';
-        $this->sauce = 'Marinara Sauce';
-
-        $this->toppings[] = 'toppings';
+        $this->name = $name;
     }
+
 }
 
-class NYStyleGreekPizza extends Pizza
+class CheesePizza extends Pizza
 {
-    public function __construct()
+    protected $ingredientFactory;
+
+    public function __construct(PizzaIngredientFactory $ingredientFactory)
     {
-        $this->name = 'NY Style Greek';
-        $this->dough = 'Thin';
-        $this->sauce = 'Marinara Sauce';
-
-        $this->toppings[] = 'toppings';
+        $this->ingredientFactory = $ingredientFactory;
     }
-}
 
-class NYStylePepperoniPizza extends Pizza
-{
-    public function __construct()
-    {
-        $this->name = 'NY Style Pepperoni';
-        $this->dough = 'Thin';
-        $this->sauce = 'Marinara Sauce';
-
-        $this->toppings[] = 'toppings';
-    }
-}
-
-class ChicagoStyleCheesePizza
-{
     public function prepare()
     {
-        echo 'CheesePizza 피자 준비'.PHP_EOL;
-    }
-
-    public function bake()
-    {
-        echo 'CheesePizza 빵굽기'.PHP_EOL;
-    }
-
-    public function cut()
-    {
-        echo 'CheesePizza 빵자르기'.PHP_EOL;
-    }
-    
-    public function box()
-    {
-        echo 'CheesePizza 박스에 담기'.PHP_EOL;
+        echo "{$this->name} 피자 준비\n";
+        $this->dough = $this->ingredientFactory->createDough();
+        $this->sauce = $this->ingredientFactory->createSauce();
+        $this->cheese = $this->ingredientFactory->createCheese();
     }
 }
 
-class ChicagoStyleGreekPizza
+class VeggiePizza extends Pizza
 {
+    protected $ingredientFactory;
+
+    public function __construct(PizzaIngredientFactory $ingredientFactory)
+    {
+        $this->ingredientFactory = $ingredientFactory;
+    }
+
     public function prepare()
     {
-        echo 'GreekPizza 피자 준비'.PHP_EOL;
-    }
-
-    public function bake()
-    {
-        echo 'GreekPizza 빵굽기'.PHP_EOL;
-    }
-
-    public function cut()
-    {
-        echo 'GreekPizza 빵자르기'.PHP_EOL;
-    }
-    
-    public function box()
-    {
-        echo 'GreekPizza 박스에 담기'.PHP_EOL;
+        echo "{$this->name} 피자 준비\n";
+        $this->dough = $this->ingredientFactory->createDough();
+        $this->sauce = $this->ingredientFactory->createSauce();
+        $this->veegies = $this->ingredientFactory->createVeggies();
     }
 }
 
-class ChicagoStylePepperoniPizza
+class PepperoniPizza extends Pizza
 {
+    protected $ingredientFactory;
+
+    public function __construct(PizzaIngredientFactory $ingredientFactory)
+    {
+        $this->ingredientFactory = $ingredientFactory;
+    }
+
     public function prepare()
     {
-        echo '피자PepperoniPizza  준비'.PHP_EOL;
-    }
-
-    public function bake()
-    {
-        echo 'PepperoniPizza 빵굽기'.PHP_EOL;
-    }
-
-    public function cut()
-    {
-        echo 'PepperoniPizza 빵자르기'.PHP_EOL;
-    }
-    
-    public function box()
-    {
-        echo 'PepperoniPizza 박스에 담기'.PHP_EOL;
+        echo "{$this->name} 피자 준비\n";
+        $this->dough = $this->ingredientFactory->createDough();
+        $this->sauce = $this->ingredientFactory->createSauce();
+        $this->cheese = $this->ingredientFactory->createCheese();
+        $this->pepperoni = $this->ingredientFactory->createPepperoni();
     }
 }
-

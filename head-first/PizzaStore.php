@@ -16,19 +16,24 @@ abstract class PizzaStore
         return $pizza;
     }
 
-    abstract public function createPizza(string $type);
+    abstract protected function createPizza(string $type);
 }
 
 class NYPizzaStore extends PizzaStore
 {
-    public function createPizza($type)
+    protected function createPizza($type)
     {
+        $ingredientFactory = new NYPizzaIngredientFactory();
+
         if ($type === 'cheese') {
-            $pizza = new NYStyleCheesePizza();
-        } elseif ($type === 'greek') {
-            $pizza = new NYStyleGreekPizza();
+            $pizza = new CheesePizza($ingredientFactory);
+            $pizza->setName("NY Style cheese");
+        } elseif ($type === 'veggie') {
+            $pizza = new VeggiePizza($ingredientFactory);
+            $pizza->setName("NY Style veggie");
         } elseif ($type === 'pepperoni') {
-            $pizza = new NYStylePepperoniPizza();
+            $pizza = new PepperoniPizza($ingredientFactory);
+            $pizza->setName("NY Style Peperoni");
         }
 
         return $pizza;
@@ -37,14 +42,19 @@ class NYPizzaStore extends PizzaStore
 
 class ChicagoPizzaStore extends PizzaStore
 {
-    public function createPizza($type)
+    protected function createPizza($type)
     {
+        $ingredientFactory = new ChicagoPizzaIngredientFactory();
+
         if ($type === 'cheese') {
-            $pizza = new ChicagoStyleCheesePizza();
-        } elseif ($type === 'greek') {
-            $pizza = new ChicagoStyleGreekPizza();
+            $pizza = new CheesePizza($ingredientFactory);
+            $pizza->setName("Chicago Style cheese");
+        } elseif ($type === 'veggie') {
+            $pizza = new VeggiePizza($ingredientFactory);
+            $pizza->setName("Chicago Style veggie");
         } elseif ($type === 'pepperoni') {
-            $pizza = new ChicagoStylePepperoniPizza();
+            $pizza = new PepperoniPizza($ingredientFactory);
+            $pizza->setName("Chicago Style Peperoni");
         }
 
         return $pizza;
