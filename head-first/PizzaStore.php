@@ -11,7 +11,7 @@ class PizzaStore
 
     public function orderPizza(string $type)
     {
-        $pizza = $this->pizzaFactory->create($type);
+        $pizza = $this->pizzaFactory->createPizza($type);
 
         $pizza->prepare();
         $pizza->bake();
