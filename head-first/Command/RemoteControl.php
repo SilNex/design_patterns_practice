@@ -34,7 +34,6 @@ class RemoteControl
     public function __toString()
     {
         $stringBuff = "\n------ Remote Control ------\n";
-        var_dump($this->onCommands);
         for ($i=0; $i < count($this->onCommands); $i++) { 
             $stringBuff .= "[slot]{$i} " . get_class($this->onCommands[$i]) . "\t" . get_class($this->offCommands[$i]) . "\n";
         }
