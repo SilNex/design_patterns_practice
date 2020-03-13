@@ -2,6 +2,7 @@
 
 use HeadFirst\NYPizzaStore;
 
+/** autoload */
 require('./Cheese.php');
 require('./Clam.php');
 require('./Dough.php');
