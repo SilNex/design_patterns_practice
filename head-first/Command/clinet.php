@@ -17,14 +17,25 @@ $fan = new Fan();
 $lightOn = new LightOnCommand($light);
 $lightOff = new LightOffCommand($light);
 
-$fan = new FanCommand($fan);
+$fanCmd = new FanCommand($fan);
+
+$macro = new MacroCommand([
+    new LightOnCommand($light),
+    new LightOffCommand($light),
+    new LightOnCommand($light),
+    new LightOffCommand($light),
+    new LightOnCommand($light),
+    new LightOffCommand($light),
+    new FanCommand($fan),
+]);
 
 $remoteControl->setCommand(0, $lightOn, $lightOff);
-$remoteControl->setCommand(1, $fan, new NoCommand);
+$remoteControl->setCommand(1, $fanCmd, new NoCommand);
+$remoteControl->setCommand(2, $macro, new NoCommand);
 echo $remoteControl;
-$remoteControl->onButtonWasPushed(0);
-$remoteControl->onButtonWasPushed(1);
-$remoteControl->undoButtonWasPushed();
+// $remoteControl->onButtonWasPushed(0);
+$remoteControl->onButtonWasPushed(2);
+// $remoteControl->undoButtonWasPushed();
 echo $remoteControl;
-$remoteControl->offButtonWasPushed(0);
-$remoteControl->undoButtonWasPushed();
+// $remoteControl->offButtonWasPushed(0);
+// $remoteControl->undoButtonWasPushed();

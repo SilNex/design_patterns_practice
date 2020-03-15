@@ -79,6 +79,31 @@ class FanCommand implements Command
     }
 }
 
+class MacroCommand implements Command
+{
+    public $command;
+
+    public function __construct(array $command)
+    {
+        $this->command =  $command;
+    }
+
+    public function execute()
+    {
+        foreach ($this->command as $command) {
+            $command->execute();
+        }
+    }
+    
+    public function undo()
+    {
+        $commands = array_reverse($this->command);
+        foreach ($commands as $command) {
+            $command->undo();
+        }
+    }
+}
+
 class NoCommand implements Command
 {
     public function execute()
