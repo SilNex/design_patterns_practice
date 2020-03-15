@@ -19,4 +19,6 @@ $lightOff = new LightOffCommand($light);
 $remoteControl->setCommand(0, $lightOn, $lightOff);
 echo $remoteControl;
 $remoteControl->onButtonWasPushed(0);
+echo $remoteControl;
 $remoteControl->offButtonWasPushed(0);
+$remoteControl->undoButtonWasPushed();

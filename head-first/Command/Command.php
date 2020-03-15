@@ -5,6 +5,7 @@ namespace HeadFirst;
 interface Command
 {
     public function execute();
+    public function undo();
 }
 
 class LightOnCommand implements Command
@@ -17,6 +18,11 @@ class LightOnCommand implements Command
     public function execute()
     {
         $this->light->on();
+    }
+
+    public function undo()
+    {
+        $this->light->off();
     }
 }
 
@@ -31,11 +37,19 @@ class LightOffCommand implements Command
     {
         $this->light->off();
     }
+
+    public function undo()
+    {
+        $this->light->on();
+    }
 }
 
 class NoCommand implements Command
 {
     public function execute()
+    {
+    }
+    public function undo()
     {
     }
 }
